@@ -18,18 +18,21 @@ public class Search {
     //only_with_salary=true - только с указанием зп
     //search_field - name/company_name/description
 
-    private final String AREA = "area=3";//area - EKB
+    private static final String AREA = "area=3";//area - EKB
     private final String itemsOnPage = "items_on_page=100";//100 результатов на странице, для парсинга
     private final String currencyCode = "currency_code=RUR";//код валюты
-    private String text = "text=";
+    private static final String text = "text=";
     private String experience = "experience=";
     private String orderBy = "order_by=";
     private String searchPeriod = "search_period=";
     private String salary = "salary=";
     private String onlyWithSalary = "only_with_salary=";
 
+    public Search(String text) {
+        //this.text += text;
+    }
 
-
-
-
+    public static String getURL(String query){
+        return URL + text + query + "&" + AREA;
+    }
 }
