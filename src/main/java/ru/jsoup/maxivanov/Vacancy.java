@@ -1,18 +1,148 @@
 package ru.jsoup.maxivanov;
 
+import java.util.ArrayList;
+
 public class Vacancy {
 
-    String vacancyTitle;//header + salary .vacancy-title
-    String vacancyCompanyWrapper;// companyName + logo + адрес .vacancy-company-wrapper
-    //HH/VacancyResponsePopup/VacancyResponsePopup - properties vacancy
-    String vacancyDescription;//bloko-gap bloko-gap_bottom(требуемый опыт работы)
-                              //g-user-content - описание вакансии
-                              //vacancy-section - ключевые навыки
-                              //vacancy-section - jobLocation - адрес
-                              //vacancy-icon-wrapper - доступность инвалидам и тд
-                                //vacancy-section - контактная инфа. телефон. имя
-                                //.vacancy-description
+    private String vacancyURL;
+    private String vacancyTitle;
+    private String vacancyDescription;
+    private ArrayList<String> vacancyTags;
+    private String vacancyCreationTime;
+    private String vacancyCompanyName;
+    private String vacancyCompanyAddress;
+    private String vacancyCompanyURL;
+    private String vacancyExperience;
+    private String vacancyEmploymentType;
+    private String vacancyWorkHours;
+    private String vacancySalary;
+    private String vacancyCompanyContacts;
+    private String vacancyCompanyEmail;
+    private String vacancyIndustry;
 
+    //vacancy-icon-wrapper - доступность инвалидам и тд
+
+    public Vacancy(){}
+
+    public String getVacancyURL() {
+        return vacancyURL;
+    }
+
+    public void setVacancyURL(String vacancyURL) {
+        this.vacancyURL = vacancyURL;
+    }
+
+    public String getVacancyTitle() {
+        return vacancyTitle;
+    }
+
+    public void setVacancyTitle(String vacancyTitle) {
+        this.vacancyTitle = vacancyTitle;
+    }
+
+    public String getVacancyDescription() {
+        return vacancyDescription;
+    }
+
+    public void setVacancyDescription(String vacancyDescription) {
+        this.vacancyDescription = vacancyDescription;
+    }
+
+    public ArrayList<String> getVacancyTags() {
+        return vacancyTags;
+    }
+
+    public void setVacancyTags(ArrayList<String> vacancyTags) {
+        this.vacancyTags = vacancyTags;
+    }
+
+    public String getVacancyCreationTime() {
+        return vacancyCreationTime;
+    }
+
+    public void setVacancyCreationTime(String vacancyCreationTime) {
+        this.vacancyCreationTime = vacancyCreationTime;
+    }
+
+    public String getVacancyCompanyName() {
+        return vacancyCompanyName;
+    }
+
+    public void setVacancyCompanyName(String vacancyCompanyName) {
+        this.vacancyCompanyName = vacancyCompanyName;
+    }
+
+    public String getVacancyCompanyAddress() {
+        return vacancyCompanyAddress;
+    }
+
+    public void setVacancyCompanyAddress(String vacancyCompanyAddress) {
+        this.vacancyCompanyAddress = vacancyCompanyAddress;
+    }
+
+    public String getVacancyCompanyURL() {
+        return vacancyCompanyURL;
+    }
+
+    public void setVacancyCompanyURL(String vacancyCompanyURL) {
+        this.vacancyCompanyURL = vacancyCompanyURL;
+    }
+
+    public String getVacancyExperience() {
+        return vacancyExperience;
+    }
+
+    public void setVacancyExperience(String vacancyExperience) {
+        this.vacancyExperience = vacancyExperience;
+    }
+
+    public String getVacancyEmploymentType() {
+        return vacancyEmploymentType;
+    }
+
+    public void setVacancyEmploymentType(String vacancyEmploymentType) {
+        this.vacancyEmploymentType = vacancyEmploymentType;
+    }
+
+    public String getVacancyWorkHours() {
+        return vacancyWorkHours;
+    }
+
+    public void setVacancyWorkHours(String vacancyWorkHours) {
+        this.vacancyWorkHours = vacancyWorkHours;
+    }
+
+    public String getVacancySalary() {
+        return vacancySalary;
+    }
+
+    public void setVacancySalary(String vacancySalary) {
+        this.vacancySalary = vacancySalary;
+    }
+
+    public String getVacancyCompanyContacts() {
+        return vacancyCompanyContacts;
+    }
+
+    public void setVacancyCompanyContacts(String companyContacts) {
+        this.vacancyCompanyContacts = companyContacts;
+    }
+
+    public String getVacancyCompanyEmail() {
+        return vacancyCompanyEmail;
+    }
+
+    public void setVacancyCompanyEmail(String companyEmail) {
+        this.vacancyCompanyEmail = companyEmail;
+    }
+
+    public String getVacancyIndustry() {
+        return vacancyIndustry;
+    }
+
+    public void setVacancyIndustry(String vacancyIndustry) {
+        this.vacancyIndustry = vacancyIndustry;
+    }
 
 
 //.header data-qa[page-title] - сколько вакансий по данному запросу
@@ -62,7 +192,6 @@ public class Vacancy {
     //og:description - Название вакансии, зп, когда опублековано
 
     //div itemscope="itemscope" meta itemprop="industry" content=" ... " - название типа вакансии
-
 
 
 }

@@ -6,7 +6,7 @@ public class TestJsoup {
 
     public static void main(String[] args) throws IOException {
         //TestUI.runGUI();
-        Parser.printHTML("java");
+        System.out.println(Parser.printHTML("java"));
     }
 }
 
