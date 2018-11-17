@@ -37,11 +37,11 @@ public class TestUI {
                 //JOptionPane.showMessageDialog(frame, "word: " + searchQ.getText());
                 String url = null;
                 try {
-                    url = Parser.pars(searchQ.getText());
+                    url = Parser.printHTML(searchQ.getText());
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                System.out.println(url);
+                //System.out.println(url);
             }
         });
 
