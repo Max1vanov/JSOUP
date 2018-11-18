@@ -242,22 +242,33 @@ public class Vacancy {
 
     @Override
     public String toString() {
-
        StringBuilder builder = new StringBuilder();
-        //String tag = "";
-        for (String t : vacancyTags) {
-            builder.append(t).append(" / ");
-        }
+       if (vacancyTags == null || vacancyTags.size()==0 || vacancyTags.get(0).equals("") || vacancyTags.get(0) == null) {
+           builder.append("");
+       } else {
+           for (String t : vacancyTags) {
+               builder.append(t).append(" / ");
+           }
+       }
 
         Company company = VacanciesSet.companies.get(this.companyID);
-        return "Vacancy title: '" + this.vacancyTitle +"'\n\tSalary: '" +this.getVacancySalary() +
-                "'\n\tLink: '" + this.getVacancyURL() + "'\n\tTags: '" + builder.toString() + "'\n\t" + this.vacancyCreationTime +
+        return "\tVacancy industry: '" +this.vacancyIndustry+"'\n\nVacancy title: '" + this.vacancyTitle +
+                "'\n\tSalary: '" +this.vacancySalary +
+                "'\n\tLink: '" + this.vacancyURL +
+                ((builder.toString().equals(""))?"":"'\n\tTags: '" + builder.toString()+ "'") +
+                "\n\t" + this.vacancyCreationTime +
                 "\n\n" + company.toString() + "\n\n\t"+
-                "Required experience: '" + this.getVacancyExperience() + "'\n\t"+
-                "Employment type: '" + this.getVacancyEmploymentType() + "', Work schedule: '" + this.getVacancyWorkHours() +
-                "'\n\n" + this.getVacancyDescription() + "\n\n\t" +
-                "Company contacts: '" + this.getVacancyCompanyContacts() + "'\n\t" +
-                "Company e-mail: '" + this.getVacancyCompanyEmail() + "'\n\t";
+                "Required experience: '" + this.vacancyExperience + "'\n\t"+
+                "Employment type: '" + this.vacancyEmploymentType + "', Work schedule: '" + this.vacancyWorkHours +
+                "'\n\n" + this.vacancyDescription + "\n\t" +
+                (this.vacancyCompanyContacts == null ||
+                        this.vacancyCompanyContacts.equals("null")||
+                        this.vacancyCompanyContacts.equals("") ? "" :
+                        ("Company contacts:\n" + this.vacancyCompanyContacts))+ "\n\t" +
+                ((this.vacancyCompanyEmail == null ||
+                        this.vacancyCompanyEmail.equals("null") ||
+                        this.vacancyCompanyEmail.equals("")) ? "" : (
+                "Company e-mail: '" + this.vacancyCompanyEmail + "'"));
     }
 
     //.header data-qa[page-title] - сколько вакансий по данному запросу

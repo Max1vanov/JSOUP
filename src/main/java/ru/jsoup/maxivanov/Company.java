@@ -83,6 +83,9 @@ public class Company {
 
     @Override
     public String toString() {
-        return "Company name: '" + this.companyName + "',\n\tCompany address: '" + this.companyAddress + "',\n\tCompany URL: '" + this.companyURL +"'";
+        return "Company name: '" + this.companyName +
+                ((this.companyAddress==null||this.companyAddress.equals("")||this.companyAddress.equals("null"))?
+                        "":("',\n\tCompany address: '" + this.companyAddress)) +
+                "',\n\tCompany URL: '" + this.companyURL +"'";
     }
 }

@@ -45,13 +45,25 @@ public class Parser {
 
             //Описание вакансии
             if (!docVacancy.select(".g-user-content").text().equals("")) {
-                vacancy.setVacancyDescription(docVacancy.select(".g-user-content").text());
+                Elements desc = docVacancy.select(".g-user-content").select("*");
+                vacancy.setVacancyDescription(parseDescriprionVacancy(desc));
+
+                //vacancy.setVacancyDescription(docVacancy.select(".g-user-content").text());
+                //System.out.println(parseDescriprionVacancy(desc));
+                //System.out.println("*********************");
                 if (debug)
-                    System.out.println(docVacancy.select(".g-user-content").text());
+                    System.out.println(parseDescriprionVacancy(desc));
+                    //System.out.println(docVacancy.select(".g-user-content").text());
             } else {
-                vacancy.setVacancyDescription(docVacancy.select(".vacancy-branded-user-content").text());
+                Elements desc = docVacancy.select(".vacancy-branded-user-content").select("*");
+                vacancy.setVacancyDescription(parseDescriprionVacancy(desc));
+
+                //vacancy.setVacancyDescription(docVacancy.select(".vacancy-branded-user-content").text());
+                //System.out.println(parseDescriprionVacancy(desc));
+                //System.out.println("*********************");
                 if (debug)
-                    System.out.println(docVacancy.select(".vacancy-branded-user-content").text());
+                    System.out.println(parseDescriprionVacancy(desc));
+                    //System.out.println(docVacancy.select(".vacancy-branded-user-content").text());
             }
 
             //ключевые навыки
@@ -108,18 +120,19 @@ public class Parser {
                 System.out.println(docVacancy.select(".vacancy-salary").text());
 
             //контактная инфа
-            Elements pContacts = docVacancy.select(".vacancy-contacts__body");
+            Elements pContacts = docVacancy.select(".vacancy-contacts__body").select("p");
+            StringBuilder contact = new StringBuilder();
             for (Element p : pContacts) {
-                vacancy.setVacancyCompanyContacts(p.select("p").text());
+                contact.append(p.text()).append("\n");
                 if (debug)
-                    System.out.println(p.select("p").text());
+                    System.out.println(p.text());
             }
-            Elements aContacts = docVacancy.select(".vacancy-contacts__body");
-            for (Element a : aContacts) {
-                vacancy.setVacancyCompanyEmail(a.select("a").text());
+            vacancy.setVacancyCompanyContacts(contact.toString());
+
+            vacancy.setVacancyCompanyEmail(docVacancy.select(".vacancy-contacts__body").select("a").text());
                 if (debug)
-                    System.out.println(a.select("a").text());
-            }
+                    System.out.println(docVacancy.select(".vacancy-contacts__body").select("a").text());
+
 
             //тип вакансии
             vacancy.setVacancyIndustry(docVacancy.select(".bloko-columns-row").select("meta[itemprop=\"industry\"]").attr("content"));
@@ -147,5 +160,19 @@ public class Parser {
         }*/
 
         return VacanciesSet.vacancies;
+    }
+
+    private static String parseDescriprionVacancy(Elements desc) {
+        StringBuilder builder = new StringBuilder();
+        for (Element d : desc) {
+            if (d.tagName().equals("p")) {
+                builder.append(d.text()).append("\n");
+                //System.out.println(d.text());
+            }else if (d.tagName().equals("li")) {
+                builder.append("* ").append(d.text()).append("\n");
+                //System.out.println("*" + d.text());
+            }
+        }
+        return builder.toString();
     }
 }
