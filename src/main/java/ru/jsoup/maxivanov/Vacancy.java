@@ -4,25 +4,44 @@ import java.util.ArrayList;
 
 public class Vacancy {
 
-    private String vacancyURL;
     private String vacancyTitle;
-    private String vacancyDescription;
+    private String vacancySalary;
+    private String vacancyURL;
     private ArrayList<String> vacancyTags;
     private String vacancyCreationTime;
-    private String vacancyCompanyName;
-    private String vacancyCompanyAddress;
-    private String vacancyCompanyURL;
+    private int companyID;
     private String vacancyExperience;
     private String vacancyEmploymentType;
     private String vacancyWorkHours;
-    private String vacancySalary;
+    private String vacancyDescription;
     private String vacancyCompanyContacts;
     private String vacancyCompanyEmail;
     private String vacancyIndustry;
+    private int vacancyID;
 
+    /*private String vacancyCompanyName;
+    private String vacancyCompanyAddress;
+    private String vacancyCompanyURL;*/
     //vacancy-icon-wrapper - доступность инвалидам и тд
 
     public Vacancy(){}
+
+    public int getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(int companyID) {
+        this.companyID = companyID;
+    }
+
+
+    public int getVacancyID() {
+        return vacancyID;
+    }
+
+    public void setVacancyID(int vacancyID) {
+        this.vacancyID = vacancyID;
+    }
 
     public String getVacancyURL() {
         return vacancyURL;
@@ -30,6 +49,9 @@ public class Vacancy {
 
     public void setVacancyURL(String vacancyURL) {
         this.vacancyURL = vacancyURL;
+
+        String[] id = vacancyURL.split("/");
+        setVacancyID(Integer.valueOf(id[id.length-1]));
     }
 
     public String getVacancyTitle() {
@@ -64,7 +86,7 @@ public class Vacancy {
         this.vacancyCreationTime = vacancyCreationTime;
     }
 
-    public String getVacancyCompanyName() {
+    /*public String getVacancyCompanyName() {
         return vacancyCompanyName;
     }
 
@@ -87,7 +109,7 @@ public class Vacancy {
     public void setVacancyCompanyURL(String vacancyCompanyURL) {
         this.vacancyCompanyURL = vacancyCompanyURL;
     }
-
+*/
     public String getVacancyExperience() {
         return vacancyExperience;
     }
@@ -144,8 +166,101 @@ public class Vacancy {
         this.vacancyIndustry = vacancyIndustry;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = vacancyID;
+        hash = 31 * hash + (this.vacancyCompanyContacts != null ? this.vacancyCompanyContacts.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyCompanyEmail != null ? this.vacancyCompanyEmail.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyCreationTime != null ? this.vacancyCreationTime.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyIndustry != null ? this.vacancyIndustry.hashCode() : 0);
+        hash = 31 * hash + (this.vacancySalary != null ? this.vacancySalary.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyWorkHours != null ? this.vacancyWorkHours.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyEmploymentType != null ? this.vacancyEmploymentType.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyExperience != null ? this.vacancyExperience.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyTags != null ? this.vacancyTags.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyDescription != null ? this.vacancyDescription.hashCode() : 0);
+        hash = 31 * hash + (this.vacancyTitle != null ? this.vacancyTitle.hashCode() : 0);
 
-//.header data-qa[page-title] - сколько вакансий по данному запросу
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!Vacancy.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final Vacancy otherV = (Vacancy) obj;
+        if (this.vacancyID != otherV.vacancyID) {
+            return false;
+        }
+        if ((this.vacancyCompanyContacts == null) ? (otherV.vacancyCompanyContacts != null) : (!this.vacancyCompanyContacts.equals(otherV.vacancyCompanyContacts))) {
+            return false;
+        }
+         if ((this.vacancyCompanyEmail == null) ? (otherV.vacancyCompanyEmail != null) : (!this.vacancyCompanyEmail.equals(otherV.vacancyCompanyEmail))) {
+            return false;
+        }
+         if ((this.vacancyCreationTime == null) ? (otherV.vacancyCreationTime != null) : (!this.vacancyCreationTime.equals(otherV.vacancyCreationTime))) {
+            return false;
+        }
+         if ((this.vacancyIndustry == null) ? (otherV.vacancyIndustry != null) : (!this.vacancyIndustry.equals(otherV.vacancyIndustry))) {
+            return false;
+        }
+         if ((this.vacancySalary == null) ? (otherV.vacancySalary != null) : (!this.vacancySalary.equals(otherV.vacancySalary))) {
+            return false;
+        }
+         if ((this.vacancyWorkHours == null) ? (otherV.vacancyWorkHours != null) : (!this.vacancyWorkHours.equals(otherV.vacancyWorkHours))) {
+            return false;
+        }
+         if ((this.vacancyEmploymentType == null) ? (otherV.vacancyEmploymentType != null) : (!this.vacancyEmploymentType.equals(otherV.vacancyEmploymentType))) {
+            return false;
+        }
+         if ((this.vacancyExperience == null) ? (otherV.vacancyExperience != null) : (!this.vacancyExperience.equals(otherV.vacancyExperience))) {
+            return false;
+        }
+         if ((this.vacancyTags == null) ? (otherV.vacancyTags != null) : (!this.vacancyTags.equals(otherV.vacancyTags))) {
+            return false;
+        }
+         if ((this.vacancyDescription == null) ? (otherV.vacancyDescription != null) : (!this.vacancyDescription.equals(otherV.vacancyDescription))) {
+            return false;
+        }
+         if ((this.vacancyTitle == null) ? (otherV.vacancyTitle != null) : (!this.vacancyTitle.equals(otherV.vacancyTitle))) {
+            return false;
+        }
+         if ((this.vacancyURL == null) ? (otherV.vacancyURL != null) : (!this.vacancyURL.equals(otherV.vacancyURL))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+
+       StringBuilder builder = new StringBuilder();
+        //String tag = "";
+        for (String t : vacancyTags) {
+            builder.append(t).append(" / ");
+        }
+
+        Company company = VacanciesSet.companies.get(this.companyID);
+        return "Vacancy title: '" + this.vacancyTitle +"'\n\tSalary: '" +this.getVacancySalary() +
+                "'\n\tLink: '" + this.getVacancyURL() + "'\n\tTags: '" + builder.toString() + "'\n\t" + this.vacancyCreationTime +
+                "\n\n" + company.toString() + "\n\n\t"+
+                "Required experience: '" + this.getVacancyExperience() + "'\n\t"+
+                "Employment type: '" + this.getVacancyEmploymentType() + "', Work schedule: '" + this.getVacancyWorkHours() +
+                "'\n\n" + this.getVacancyDescription() + "\n\n\t" +
+                "Company contacts: '" + this.getVacancyCompanyContacts() + "'\n\t" +
+                "Company e-mail: '" + this.getVacancyCompanyEmail() + "'\n\t";
+    }
+
+    //.header data-qa[page-title] - сколько вакансий по данному запросу
     //.search-suggestion - результаты запроса. Если "Попробуйте другие варианты поискового запроса" то конец
     //.bloko-form-spacer потом .bloko-button HH-Pager-Control rel = "nofollow" - последняя страница
 //НАШЕЛ сопсоб определения последней вакансии для парсинга .search-item-name  0..."data-position"<"data-totalvacancies"<2000

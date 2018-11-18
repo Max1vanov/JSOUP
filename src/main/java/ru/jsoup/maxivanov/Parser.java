@@ -8,103 +8,133 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Parser {
-    private static ArrayList<Vacancy> vacancies;
+    //private static ArrayList<Vacancy> vacancies;
+    //private static HashSet<Company> companies;
+
 
     public static String printHTML(String text) throws IOException {
         return Jsoup.connect(Search.getURL(text)).get().html();
     }
 
-    public static ArrayList<Vacancy> pars(String text) throws IOException {
+    public static HashMap<Integer,Vacancy> pars(String text) throws IOException {
 
         Document doc = Jsoup.connect(Search.getURL(text)).get();
-        vacancies = new ArrayList<Vacancy>();
+        //vacancies = new ArrayList<Vacancy>();
+        //companies = new HashSet<Company>();
+
         Elements elements = doc.select(".search-item-name");
         //start
         //vacancies + href
         int count = 0;
 
+        boolean debug = false;
+
         for (Element el : elements) {
             Vacancy vacancy = new Vacancy();
-            vacancy.setVacancyURL(el.select("a").attr("href"));
+            Company company = new Company();
+            String[] url = el.select("a").attr("href").split("\\?");
+            vacancy.setVacancyURL(url[0]);
             vacancy.setVacancyTitle(el.text());
-
-            System.out.println(el.text() + ": " + el.select("a").attr("href"));
+            if (debug)
+                System.out.println(el.text() + ": " + url[0]);
 
             Document docVacancy = Jsoup.connect(el.select("a").attr("href")).get();
 
             //Описание вакансии
-            if(!docVacancy.select(".g-user-content").text().equals("")){
+            if (!docVacancy.select(".g-user-content").text().equals("")) {
                 vacancy.setVacancyDescription(docVacancy.select(".g-user-content").text());
-                System.out.println(docVacancy.select(".g-user-content").text());
-            }else {
+                if (debug)
+                    System.out.println(docVacancy.select(".g-user-content").text());
+            } else {
                 vacancy.setVacancyDescription(docVacancy.select(".vacancy-branded-user-content").text());
-                System.out.println(docVacancy.select(".vacancy-branded-user-content").text());
+                if (debug)
+                    System.out.println(docVacancy.select(".vacancy-branded-user-content").text());
             }
 
             //ключевые навыки
             Elements tagList = docVacancy.select(".Bloko-TagList-Text");
             ArrayList<String> tags = new ArrayList<String>();
-            for (Element tag : tagList){
+            for (Element tag : tagList) {
                 tags.add(tag.text());
-                System.out.print(tag.text() + "/ ");
+                if (debug)
+                    System.out.print(tag.text() + "/ ");
             }
             vacancy.setVacancyTags(tags);
-            System.out.println();
+            //System.out.println();
 
             //дата вакансии
             vacancy.setVacancyCreationTime(docVacancy.select(".vacancy-creation-time").text());
-            System.out.println(docVacancy.select(".vacancy-creation-time").text());
+            if (debug)
+                System.out.println(docVacancy.select(".vacancy-creation-time").text());
 
             //компания
-            vacancy.setVacancyCompanyName(docVacancy.select(".vacancy-company-name-wrapper").select("span[itemprop=\"name\"]").text());
-            System.out.println(docVacancy.select(".vacancy-company-name-wrapper").select("span[itemprop=\"name\"]").text());
+            company.setCompanyName(docVacancy.select(".vacancy-company-name-wrapper").select("span[itemprop=\"name\"]").text());
+            if (debug)
+                System.out.println(docVacancy.select(".vacancy-company-name-wrapper").select("span[itemprop=\"name\"]").text());
 
             //ссылка на компанию
-            vacancy.setVacancyCompanyURL("https://ekaterinburg.hh.ru"+docVacancy.select(".vacancy-company-name-wrapper").select("a").attr("href"));
-            System.out.println("https://ekaterinburg.hh.ru"+docVacancy.select(".vacancy-company-name-wrapper").select("a").attr("href"));
+            company.setCompanyURL("https://ekaterinburg.hh.ru" + docVacancy.select(".vacancy-company-name-wrapper").select("a").attr("href"));
+            vacancy.setCompanyID(company.getCompanyId());
+
+            if (debug)
+                System.out.println("https://ekaterinburg.hh.ru" + docVacancy.select(".vacancy-company-name-wrapper").select("a").attr("href"));
 
             //адрес компании
-            vacancy.setVacancyCompanyAddress(docVacancy.select(".vacancy-company-wrapper").select("span[data-qa=\"vacancy-view-raw-address\"]").text());
-            System.out.println(docVacancy.select(".vacancy-company-wrapper").select("span[data-qa=\"vacancy-view-raw-address\"]").text());
+            company.setCompanyAddress(docVacancy.select(".vacancy-company-wrapper").select("span[data-qa=\"vacancy-view-raw-address\"]").text());
+            if (debug)
+                System.out.println(docVacancy.select(".vacancy-company-wrapper").select("span[data-qa=\"vacancy-view-raw-address\"]").text());
 
             //требуемый опыт
             vacancy.setVacancyExperience(docVacancy.select(".vacancy-description").select("span[data-qa=\"vacancy-experience\"]").text());
-            System.out.println(docVacancy.select(".vacancy-description").select("span[data-qa=\"vacancy-experience\"]").text());
+            if (debug)
+                System.out.println(docVacancy.select(".vacancy-description").select("span[data-qa=\"vacancy-experience\"]").text());
 
             //тип занятости
             vacancy.setVacancyEmploymentType(docVacancy.select(".vacancy-description").select("span[itemprop=\"employmentType\"]").text());
-            System.out.println(docVacancy.select(".vacancy-description").select("span[itemprop=\"employmentType\"]").text());
+            if (debug)
+                System.out.println(docVacancy.select(".vacancy-description").select("span[itemprop=\"employmentType\"]").text());
 
             //график
             vacancy.setVacancyWorkHours(docVacancy.select(".vacancy-description").select("span[itemprop=\"workHours\"]").text());
-            System.out.println(docVacancy.select(".vacancy-description").select("span[itemprop=\"workHours\"]").text());
+            if (debug)
+                System.out.println(docVacancy.select(".vacancy-description").select("span[itemprop=\"workHours\"]").text());
 
             //зп
             vacancy.setVacancySalary(docVacancy.select(".vacancy-salary").text());
-            System.out.println(docVacancy.select(".vacancy-salary").text());
+            if (debug)
+                System.out.println(docVacancy.select(".vacancy-salary").text());
 
             //контактная инфа
             Elements pContacts = docVacancy.select(".vacancy-contacts__body");
             for (Element p : pContacts) {
                 vacancy.setVacancyCompanyContacts(p.select("p").text());
-                System.out.println(p.select("p").text());
+                if (debug)
+                    System.out.println(p.select("p").text());
             }
             Elements aContacts = docVacancy.select(".vacancy-contacts__body");
             for (Element a : aContacts) {
                 vacancy.setVacancyCompanyEmail(a.select("a").text());
-                System.out.println(a.select("a").text());
+                if (debug)
+                    System.out.println(a.select("a").text());
             }
 
             //тип вакансии
             vacancy.setVacancyIndustry(docVacancy.select(".bloko-columns-row").select("meta[itemprop=\"industry\"]").attr("content"));
-            System.out.println(docVacancy.select(".bloko-columns-row").select("meta[itemprop=\"industry\"]").attr("content"));
+            if (debug)
+                System.out.println(docVacancy.select(".bloko-columns-row").select("meta[itemprop=\"industry\"]").attr("content"));
 
-            System.out.println("------------------------------");
+            //System.out.println("------------------------------");
             count++;
 
-            vacancies.add(vacancy);
+            //vacancies.add(vacancy);
+            VacanciesSet.vacancies.put(vacancy.getVacancyID(), vacancy);
+            if(!VacanciesSet.companies.containsKey(company.getCompanyId())) {
+                VacanciesSet.companies.put(company.getCompanyId(), company);
+            }
+
         }
 
         System.out.println(count);
@@ -116,6 +146,6 @@ public class Parser {
             System.out.println(el2.text());
         }*/
 
-        return vacancies;
+        return VacanciesSet.vacancies;
     }
 }

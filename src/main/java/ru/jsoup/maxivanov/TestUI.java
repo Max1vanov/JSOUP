@@ -1,7 +1,7 @@
 package ru.jsoup.maxivanov;
 
-import com.sun.deploy.panel.JreDialog;
-import org.jsoup.Jsoup;
+//import com.sun.deploy.panel.JreDialog;
+//import org.jsoup.Jsoup;
 
 import javax.swing.*;
 import javax.swing.text.Document;
